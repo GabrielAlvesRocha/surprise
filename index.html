@@ -1,0 +1,91 @@
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Gabriel & Julia — 10 meses</title>
+ <link rel="icon" type="image/apng" href="assets/heart.apng" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Dancing+Script&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- CSS externo -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- HERO / ENTRADA -->
+    <header class="hero">
+      <div class="logo">Gabriel & Julia</div>
+      <h1>Nossa história em pequenos grandes detalhes</h1>
+      <h2>10 meses <span>de amor</span></h2>
+      <p class="lead">Minha Felicidade 🎵. Clique em "Começar" para entrar na jornada.</p>
+
+      <div class="hero-controls">
+        <button class="btn" id="startBtn">Começar</button>
+        <button class="btn ghost" id="playMusic">Ouvir nossa música</button>
+      </div>
+
+      <div class="hearts" aria-hidden="true">
+        <!-- pequenos corações decorativos gerados via JS/CSS -->
+      </div>
+    </header>
+
+    <!-- TIMELINE -->
+    <section id="timeline" class="block card">
+      <h3>Melhores Momentos</h3>
+      <div class="timeline" id="timelineList">
+        <!-- itens injetados por JS -->
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery" class="block">
+      <div class="card">
+        <h3>Álbum de memórias</h3>
+        <div class="gallery" id="galleryGrid">
+          <!-- polaroids injetados por JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- LETTERS -->
+    <section id="letters" class="block card">
+      <h3>Cartas & Promessas</h3>
+      <div class="letters" id="lettersGrid">
+        <!-- cartas injetadas por JS -->
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section id="quizSection" class="block card">
+      <h3>Quanto você me conhece?</h3>
+      <div class="quiz" id="quizWrap">
+        <!-- quiz em JS -->
+      </div>
+    </section>
+
+    <!-- FINAL -->
+    <section id="final" class="block final">
+      <h2>Eu te escolheria de novo. E de novo.</h2>
+      <p class="lead">Obrigado por cada dia juntos.</p>
+      <button class="btn" id="downloadLetter">Baixar carta (PDF)</button>
+    </section>
+
+  </div>
+
+  <!-- Modal para imagens/textos -->
+  <div class="modal" id="modal">
+    <div class="pane">
+      <button id="closeModal" class="btn ghost">Fechar</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- Áudio (substitua 'partilhar.mp3' pelo arquivo real) -->
+  <audio id="song" src="assets/Roberta Campos   Minha Felicidade (Tema da Novela Sol Nascente)[4].mp3" preload="none"></audio>
+
+  <!-- JS externo -->
+  <script src="js/script.js"></script>
+</body>
+</html>
