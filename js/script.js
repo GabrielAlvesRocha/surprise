@@ -173,32 +173,70 @@ const startBtn = document.getElementById('startBtn');
 if(startBtn) startBtn.addEventListener('click', ()=>{ document.getElementById('timeline').scrollIntoView({behavior:'smooth'}); });
 
 // Download de carta (tenta gerar PDF usando jsPDF; se não, TXT como fallback)
-document.getElementById('downloadLetter').addEventListener('click', async ()=>{
-  const cartaText = `Minha Princesa,\n\n Cada dia ao seu lado é um presente.\n\n Obrigado por esses 10 meses incríveis. Eu sei que a distância às vezes pesa, que a saudade aperta e que nem sempre é fácil lidar com isso. Mas mesmo com tudo isso, eu sempre vou escolher continuar com você. Porque você vale a pena. Você vale cada minuto esperando, cada ligação, cada sorriso que eu guardo pra te mostrar quando a gente se vê.\n\n Eu agradeço todos os dias por ter trocado de escola no meio do ano, do nada, sem planejar, sem esperar. Foi uma mudança que parecia pequena, mas que mudou a minha vida inteira. Se eu soubesse, naquele dia, que aquilo ia me levar até você… eu teria feito tudo ainda mais rápido. Teria chegado antes.\n\n Eu amo o jeito que você fala, o jeito que ri, o jeitinho que você me acalma mesmo de longe.\n\n Você entrou na minha vida de um jeito tão natural, e ainda assim conseguiu transformar tudo. Você me fez querer ser alguém melhor. E eu quero crescer ao seu lado, aprender contigo, te apoiar, te ouvir, te cuidar.\n\n Eu não quero algo perfeito, eu quero algo verdadeiro. E verdadeiro é o que a gente tem.\n\n Ainda tem tanta coisa que eu quero viver com você: viagens, risadas, planos bobos, sonhos grandes… até aquelas conversas aleatórias sobre o futuro que a gente faz sem nem perceber. Eu quero tudo isso e quero com você.\n\n Obrigado por ser você.\n Por ficar.\n Por escolher ficar comigo também.\n Eu Te amo, minha princesa.\n Hoje, amanhã… e sempre que você quiser. — Seu Homi ❤️\n\nCom amor,\nGabriel`;
-  // verifica se jsPDF está disponível
-  try{
-    if(window.jspdf || window.jspdf !== undefined){
-      // nova API UMD: window.jspdf.jsPDF
-      const { jsPDF } = window.jspdf ? window.jspdf : window.jspdf || (window.jspdf = null);
-      if(jsPDF){
-        const doc = new jsPDF({unit:'pt', format:'a4'});
-        const lines = doc.splitTextToSize(cartaText, 520);
-        doc.setFont('Times','Normal');
-        doc.setFontSize(14);
-        doc.text(lines, 40, 80);
-        doc.save('carta-gabriel-julia.pdf');
-        return;
-      }
-    }
-  }catch(err){
-    console.warn('jsPDF não disponível ou falha ao gerar PDF:', err);
-  }
+// document.getElementById('downloadLetter').addEventListener('click', async ()=>{
+//   const cartaText = `Minha Princesa,\n\n Cada dia ao seu lado é um presente.\n\n Obrigado por esses 10 meses incríveis. Eu sei que a distância às vezes pesa, que a saudade aperta e que nem sempre é fácil lidar com isso. Mas mesmo com tudo isso, eu sempre vou escolher continuar com você. Porque você vale a pena. Você vale cada minuto esperando, cada ligação, cada sorriso que eu guardo pra te mostrar quando a gente se vê.\n\n Eu agradeço todos os dias por ter trocado de escola no meio do ano, do nada, sem planejar, sem esperar. Foi uma mudança que parecia pequena, mas que mudou a minha vida inteira. Se eu soubesse, naquele dia, que aquilo ia me levar até você… eu teria feito tudo ainda mais rápido. Teria chegado antes.\n\n Eu amo o jeito que você fala, o jeito que ri, o jeitinho que você me acalma mesmo de longe.\n\n Você entrou na minha vida de um jeito tão natural, e ainda assim conseguiu transformar tudo. Você me fez querer ser alguém melhor. E eu quero crescer ao seu lado, aprender contigo, te apoiar, te ouvir, te cuidar.\n\n Eu não quero algo perfeito, eu quero algo verdadeiro. E verdadeiro é o que a gente tem.\n\n Ainda tem tanta coisa que eu quero viver com você: viagens, risadas, planos bobos, sonhos grandes… até aquelas conversas aleatórias sobre o futuro que a gente faz sem nem perceber. Eu quero tudo isso e quero com você.\n\n Obrigado por ser você.\n Por ficar.\n Por escolher ficar comigo também.\n Eu Te amo, minha princesa.\n Hoje, amanhã… e sempre que você quiser. — Seu Homi ❤️\n\nCom amor,\nGabriel`;
+//   // verifica se jsPDF está disponível
+//   try{
+//     if(window.jspdf || window.jspdf !== undefined){
+//       // nova API UMD: window.jspdf.jsPDF
+//       const { jsPDF } = window.jspdf ? window.jspdf : window.jspdf || (window.jspdf = null);
+//       if(jsPDF){
+//         const doc = new jsPDF({unit:'pt', format:'a4'});
+//         const lines = doc.splitTextToSize(cartaText, 520);
+//         doc.setFont('Times','Normal');
+//         doc.setFontSize(14);
+//         doc.text(lines, 40, 80);
+//         doc.save('carta-gabriel-julia.pdf');
+//         return;
+//       }
+//     }
+//   }catch(err){
+//     console.warn('jsPDF não disponível ou falha ao gerar PDF:', err);
+//   }
   // fallback: TXT
-  const blob = new Blob([cartaText], {type:'text/plain'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href=url; a.download='carta-gabriel-julia.txt'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
-});
+//   const blob = new Blob([cartaText], {type:'text/plain'});
+//   const url = URL.createObjectURL(blob);
+//   const a = document.createElement('a'); a.href=url; a.download='carta-gabriel-julia.txt'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+// });
 
+// carta
+// referências
+const letterModal = document.getElementById('letterModal'); // certifique-se do id
+const signatureSvg = document.getElementById('signatureSvg');
+
+// função que reinicia a animação da assinatura
+function restartSignatureAnimation() {
+  if (!signatureSvg) return;
+  // remove a classe para "resetar" a animação
+  signatureSvg.classList.remove('animate');
+
+  // força reflow para garantir restart
+  // eslint-disable-next-line no-unused-expressions
+  void signatureSvg.offsetWidth;
+
+  // adiciona a classe que aciona as animações via CSS
+  signatureSvg.classList.add('animate');
+}
+
+// exemplo: quando abrir o modal (substitua com sua lógica de abertura)
+const openLetterBtn = document.getElementById('downloadLetter'); // seu botão
+if (openLetterBtn) {
+  openLetterBtn.addEventListener('click', () => {
+    // abre modal (se a sua lógica já faz isso, mantenha-a)
+    if (letterModal) letterModal.classList.add('open');
+
+    // reinicia animação da assinatura
+    // pequena espera garante que modal esteja visível e reflow aconteça
+    setTimeout(restartSignatureAnimation, 80);
+  });
+}
+
+// fecha modal (se já tem lógica, mantenha)
+// exemplo simples:
+const closeLetterBtn = document.querySelector('.closeLetter');
+if (closeLetterBtn) closeLetterBtn.addEventListener('click', () => {
+  if (letterModal) letterModal.classList.remove('open');
+});
 // Ajuda visual: se quiser posso adicionar:
 // - localStorage para salvar cartas personalizadas
 // - PDF com imagem de fundo (requer jsPDF e fontes embutidas)
